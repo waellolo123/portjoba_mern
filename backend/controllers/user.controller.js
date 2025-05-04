@@ -66,7 +66,9 @@ export const loginUser = async (req, res) => {
 
 
 // get user data
-export const getUserData = async (req, res) => {}
+export const getUserData = async (req, res) => {
+  
+}
 
 // apply for a job
 export const applyForJob = async (req, res) => {}
