@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import AddJob from './pages/AddJob';
 import ManageJobs from './pages/ManageJobs';
 import ViewApplications from './pages/ViewApplications';
+import "quill/dist/quill.snow.css";
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
        <Route path='manage-jobs' element={<ManageJobs/>}/>
        <Route path='view-applications' element={<ViewApplications/>}/>
       </Route>
-      
+
      </Routes>
     </div>
   )

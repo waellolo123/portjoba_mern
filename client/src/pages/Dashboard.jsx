@@ -34,20 +34,20 @@ const Dashboard = () => {
           <NavLink 
           className={({isActive}) => `flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && "bg-blue-100 border-r-4 border-light-blue"}`} 
           to="/dashboard/add-job">
-           <img src={assets.add_icon} alt="" />
-           <p>Add Job</p>
+           <img src={assets.add_icon} className="min-w-4" alt="" />
+           <p className="max-sm:hidden">Add Job</p>
           </NavLink>
           <NavLink 
           className={({isActive}) => `flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && "bg-blue-100 border-r-4 border-light-blue"}`} 
           to="/dashboard/manage-jobs">
-           <img src={assets.home_icon} alt="" />
-           <p>Manage Jobs</p>
+           <img src={assets.home_icon} className="min-w-4" alt="" />
+           <p className="max-sm:hidden">Manage Jobs</p>
           </NavLink>
           <NavLink 
           className={({isActive}) => `flex items-center p-3 sm:px-6 gap-2 w-full hover:bg-gray-100 ${isActive && "bg-blue-100 border-r-4 border-light-blue"}`} 
           to="/dashboard/view-applications">
-           <img src={assets.person_tick_icon} alt="" />
-           <p>View Applications</p>
+           <img src={assets.person_tick_icon} className="min-w-4" alt="" />
+           <p className="max-sm:hidden">View Applications</p>
           </NavLink>
         </ul>
        </div>
