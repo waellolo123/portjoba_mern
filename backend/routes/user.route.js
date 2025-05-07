@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.post("/register", upload.single("image"), registerUser);
 router.post("/login", loginUser);
-router.get("/user", getUserData);
-router.post("/apply", protectUser, applyForJob);
+router.get("/user/:id", getUserData);
+router.post("/apply/:jobId", protectUser, applyForJob);
 router.get("/applications", protectUser, getUserJobApplications);
 router.post("/update-resume", protectUser, upload.single("resume"), updateUserResume);
 
-export default router;
+export default router; 
