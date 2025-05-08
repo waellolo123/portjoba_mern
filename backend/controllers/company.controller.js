@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import {v2 as cloudinary} from "cloudinary";
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/job.model.js";
+import JobApplication from "../models/jobApplication.model.js";
 
 // register new company
 export const registerCompany = async (req, res) => {
@@ -14,7 +15,7 @@ export const registerCompany = async (req, res) => {
   try {
   const companyExist = await Company.findOne({email});
   if(companyExist){
-    return res.status(400).json({success: false, message: "company already exists"});
+    return res.json({success: false, message: "company already exists"});
   }
     const hashedPassword = await bcrypt.hash(password, 10);
     const imageUpload = await cloudinary.uploader.upload(imageFile.path);
@@ -47,8 +48,8 @@ export const loginCompany = async (req, res) => {
     const company = await Company.findOne({email});
     const isMatch = await bcrypt.compare(password, company.password);
     if(!isMatch){
-      return res.status(400).json("wrong credentials");
-    }
+      return res.json({success: false, message: "wrong credentials"});
+    } 
     res.status(200).json({
       success: true, 
       company: {
@@ -107,8 +108,12 @@ export const getCompanyPostedJobs = async (req, res) => {
   try {
     const companyId = req.company._id;
     const jobs = await Job.find({companyId});
-    // todo: adding number of applicants infos in data
-    res.status(200).json({success: true, jobsData: jobs});
+    // adding number of applicants infos in data
+    const jobsData = await Promise.all(jobs.map(async (job) => {
+      const applicants = await JobApplication.find({jobId: job._id});
+      return {...job.toObject(), applicants: applicants.length}
+    }))
+    res.status(200).json({success: true, jobsData});
   } catch (error) {
     console.log("error in get company posted jobs", error);    
     res.status(500).json({success: false, message: error.message});

@@ -7,6 +7,12 @@ export const getAllJobs = async (req, res) => {
     .populate({path: "companyId", select: "-password"});
     // .populate("companyId").select("-password");
     res.status(200).json({success: true, jobs});
+    if(typeof(jobs) === Array){
+      console.log("this is array");
+    } else {
+      console.log("this is toObject");
+    }
+    
   } catch (error) {
     console.log("error in get all jobs", error);    
     res.status(500).json({success: false, message: error.message});

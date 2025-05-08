@@ -1,8 +1,29 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
+import { useContext, useEffect } from "react";
+import { AppContext } from "../context/AppContext";
 
 
 const Dashboard = () => {
+
+  const navigate = useNavigate();
+
+  const {companyData, setCompanyData, setCompanyToken} = useContext(AppContext);
+  
+  // logout function company
+  const logout = () => {
+    setCompanyToken(null);
+    localStorage.removeItem("companyToken");
+    setCompanyData(null);
+    navigate("/");
+  } 
+
+  useEffect(()=>{
+    if(companyData){
+      navigate("/dashboard/manage-jobs");
+    }
+  },[companyData]);
+
   return (
     <div className="min-h-screen">
       {/* navbar for recruiter panel */}
@@ -13,17 +34,19 @@ const Dashboard = () => {
           <span className='text-dark-blue'>H</span>ire <span className='text-slate text-xl'>me</span>
         </h1>
         </Link>  
-        <div className="flex items-center gap-3">
-          <p className="max-sm:hidden">Welcome, Wael</p>
+          {companyData && (
+            <div className="flex items-center gap-3">
+          <p className="max-sm:hidden text-slate text-sm">Welcome, {companyData.name}</p>
           <div className="relative group">
-            <img src={assets.company_icon} className="w-8 rounded-full" alt="" />
+            <img src={companyData.image} className="w-8 rounded-full border border-light-blue" alt="" />
             <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-slate rounded pt-12">
               <ul className="list-none m-0 p-2 bg-white rounded-md border text-sm">
-                <li className="py-1 px-2 cursor-pointer pr-10">Logout</li>
+                <li onClick={logout} className="py-1 px-2 cursor-pointer pr-10">Logout</li>
               </ul>
             </div>
           </div>
-        </div>
+            </div>
+          )}
         </div>
       </div>
       {/* sidebar */}

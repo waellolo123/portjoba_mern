@@ -7,36 +7,53 @@ import JobCard from "./JobCard";
 const JobListing = () => {
 
   const {isSearched, searchFilter, setSearchFilter, jobs} = useContext(AppContext);
+
+
+  
+
   const [showFilter, setShowFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLocations, setSelectedLocations] = useState([]);
-  const [filteredJobs, setFilteredJobs] = useState(jobs);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+
+   
+
+
 
   const handleCategoryChange = (category) => {
     setSelectedCategories(
       prev => prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
     )
-
+    
   }
   const handleLocationChange = (location) => {
     setSelectedLocations(
       prev => prev.includes(location) ? prev.filter(c => c !== location) : [...prev, location]
     )
   }
-
+  
+  
   useEffect(()=>{
-    const matchesCategory = job => selectedCategories.length === 0 || selectedCategories.includes(job.category);
-    const matchesLocation = job => selectedLocations.length === 0 || selectedLocations.includes(job.location);
-    const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase());
-    const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
 
-    const newFilterJobs = jobs.slice().reverse().filter(
-      job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
-    )
+      const matchesCategory = job => selectedCategories.length === 0 || selectedCategories.includes(job.category);
+      const matchesLocation = job => selectedLocations.length === 0 || selectedLocations.includes(job.location);
+      const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase());
+      const matchesSearchLocation = job => searchFilter.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
+
+    
+    
+    const newFilterJobs = [];
+
+
+    // const newFilterJobs = jobs.slice().reverse().filter(
+    //   job => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
+    // );
+    
     setFilteredJobs(newFilterJobs);
     setCurrentPage(1);
-  },[jobs, selectedCategories, selectedLocations, searchFilter])
+
+  },[selectedCategories, selectedLocations, searchFilter, jobs]);
 
   return (
     <div className="container 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8">

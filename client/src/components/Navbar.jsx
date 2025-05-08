@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import {useClerk, UserButton, useUser} from "@clerk/clerk-react";
 import {Link} from "react-router-dom";
 import { AppContext } from '../context/AppContext';
+import { assets } from '../assets/assets';
 
 const Navbar = () => {
 
-  const {openSignIn} = useClerk();
-  const {user} = useUser();
+  // const {openSignIn} = useClerk();
+  // const {user} = useUser();
+  const user = true;
   const {setShowRecruiterLogin} = useContext(AppContext);
 
   return (
@@ -25,14 +26,14 @@ const Navbar = () => {
           {/* <p></p> */}
           {/* <p>Hi, {user.firstName+ " "+user.lastName}</p> */}
           <p className='max-sm:hidden'>Hi, {user.firstName}</p>
-          <UserButton />
+          <img src={assets.person_icon}  alt="" />
         </div>) 
         : 
         (<div className="flex gap-4 max-sm:text-sm">
           <button 
           onClick={() => setShowRecruiterLogin(true)}
           className="text-slate-500 text-sm cursor-pointer">Recruiter Login</button>
-          <button onClick={() => openSignIn()} className="bg-[#11a8e8] text-white px-6 py-2 rounded-full text-sm cursor-pointer">Login</button>
+          <button className="bg-[#11a8e8] text-white px-6 py-2 rounded-full text-sm cursor-pointer">Login</button>
         </div>)
         }
         </div>

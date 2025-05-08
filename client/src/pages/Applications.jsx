@@ -1,11 +1,17 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Navbar from "../components/Navbar"
 import { assets, jobsApplied } from "../assets/assets";
 import moment from "moment";
 import Footer from "../components/Footer";
+import { AppContext } from "../context/AppContext";
 
 
 const Applications = () => {
+
+  const {jobs} = useContext(AppContext);
+
+  console.log(typeof(jobs));
+     
 
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState(null);
@@ -63,6 +69,9 @@ const Applications = () => {
           ) : (null))}
         </tbody>
       </table>
+      
+      {console.log(typeof(jobs))}
+      
      </div>
      <Footer />
     </>
